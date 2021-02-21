@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {authMethods} from '../firebase/auth';
 import firebase from 'firebase';
+import brick from '../styling/brick.png';
+import logo from '../styling/earth-11015_1920.png';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
@@ -15,6 +17,10 @@ import '../styling/homeStyle.css'
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+const imageStyle = {
+    height:"4em",
+    width:"4em",
+}
 
 class HomepageWrapper extends React.Component {
     constructor(props) {
@@ -50,7 +56,8 @@ class HomepageWrapper extends React.Component {
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
                     <div className="logo">
-                        <img src="../styling/earth-11015_1920.png" alt="Game the World" />
+                        <img src={logo} alt="Game the World" style={imageStyle}/>
+                        Game the World
                     </div>
                     <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                         <Menu.Item key="1" icon={<PieChartOutlined />}>
@@ -87,7 +94,7 @@ class HomepageWrapper extends React.Component {
                             {this.props.children}
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    <Footer style={{ textAlign: 'center' }}>Created at the 2021 BrickHack using Ant Design ©2018  <br/> <img src={brick} alt="Game the World" style={imageStyle} /></Footer>
                 </Layout>
             </Layout>
         );

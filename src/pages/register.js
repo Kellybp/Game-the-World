@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {authMethods} from '../firebase/auth';
-import { Form, Input, Button, Checkbox } from 'antd';
+import {Form, Input, Button, Checkbox, Typography} from 'antd';
 import { Row, Col } from 'antd';
 import '../styling/registrationStyle.css'
 import { Divider } from 'antd';
@@ -40,7 +40,7 @@ const Register = () => {
                       remember: true,
                   }}
               >
-                  <h2>REGISTER</h2>
+                  <Typography.Title>REGISTER</Typography.Title>
                   <Divider />
                   <br/>
                   <Form.Item
