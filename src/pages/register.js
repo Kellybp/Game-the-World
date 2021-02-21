@@ -3,6 +3,8 @@ import {authMethods} from '../firebase/auth';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Row, Col } from 'antd';
 import '../styling/registrationStyle.css'
+import { Divider } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
 const Register = () => {
@@ -20,12 +22,9 @@ const Register = () => {
         })
   };
 
-    const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
-    };
+
     const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
+        wrapperCol: { offset: 4, span: 16 },
     };
 
   return(
@@ -35,27 +34,41 @@ const Register = () => {
           </Col>
           <Col span={8} id="form">
               <Form
-                  {...layout}
                   name="basic"
+                  className="login-form"
                   initialValues={{
                       remember: true,
                   }}
               >
-                  REGISTER
+                  <h2>REGISTER</h2>
+                  <Divider />
+                  <br/>
                   <Form.Item
-                      label="Email"
                       name="email"
                       rules={[{ required: true, message: 'Please input your email'}]}
                   >
-                      <Input value={username} onChange={e => setUsername(e.target.value)} type="email"  placeholder="Username" name="email"/>
+                      <Input
+                          prefix={<UserOutlined className="site-form-item-icon" />}
+                          value={username}
+                          onChange={e => setUsername(e.target.value)}
+                          type="email"
+                          placeholder="Username"
+                          name="email"
+                      />
                   </Form.Item>
 
                   <Form.Item
-                      label="Password"
                       name="password"
                       rules={[{ required: true, message: 'Please input your password!' }]}
                   >
-                      <Input.Password value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" name="password"/>
+                      <Input
+                          prefix={<LockOutlined className="site-form-item-icon" />}
+                          value={password}
+                          onChange={e => setPassword(e.target.value)}
+                          type="password"
+                          placeholder="Password"
+                          name="password"
+                      />
                   </Form.Item>
 
                   <Form.Item {...tailLayout} name="remember" valuePropName="checked">
@@ -64,7 +77,7 @@ const Register = () => {
 
                   <Form.Item {...tailLayout}>
                       <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-                          Submit
+                          Register
                       </Button>
                   </Form.Item>
 
