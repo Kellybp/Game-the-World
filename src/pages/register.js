@@ -20,9 +20,9 @@ const Register = () => {
       <div>
           REGISTER
           <form>
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input value={username} onChange={e => setUsername(e.target.value)} type="email"  placeholder="Username" name="email"/>
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" name="password"/>
           <button type="button" onClick={handleSubmit}> Login</button>
           </form>
