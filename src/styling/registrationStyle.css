@@ -1,0 +1,18 @@
+
+
+#image {
+    background-image: url('../styling/stairway-828883_1920.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#form{
+    height: 100vh;
+    padding: 25vh 1rem 0rem;
+}
+
+#basic{
+    box-shadow: grey 0rem 0rem 20px 3px;
+    margin: 1rem;
+    padding: 2rem;
+}

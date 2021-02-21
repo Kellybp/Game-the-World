@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {authMethods} from '../firebase/auth';
 import firebase from 'firebase';
+import {Button, Layout} from 'antd';
+import HomepageWrapper from '../components/HomepageWrapper'
+
+const {Header, Footer, Sider, Content} = Layout;
 
 const Homepage = () => {
   const [userEmail] = useState(firebase.auth().currentUser.email);
@@ -78,26 +82,32 @@ const Homepage = () => {
     getUserPosition();
     getNextEventPage();
   }, []);
+  // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+  return (
+      <Layout>
+        {/*<Header>*/}
+        {/*  HOME PAGE*/}
+        {/*  Logged User: {userEmail}*/}
+        {/*  <br/>*/}
+        {/*  <Button variant="danger" type="button" onClick={handleLogOut}> Logout</Button>*/}
+        {/*  <Button variant="primary" type="button" onClick={getNextEventPage}> NextPage</Button>*/}
+        {/*</Header>*/}
+        {/*<Layout>*/}
+        {/*  <Sider>Sider</Sider>*/}
+        {/*  <Content>*/}
+        {/*    <b>{events.length}-{nextPage}</b>*/}
+        {/*    {events.map((event, index) => {*/}
+        {/*      const {id, title} = event;*/}
 
-  return(
-      <div>
-          HOME PAGE 
-          Logged User: {userEmail}
-          <br />
-          <button type="button" onClick={handleLogOut}> Logout</button>
-          <button type="button" onClick={getNextEventPage}> NextPage</button>
-          <div>
-
-          <b>{events.length}-{nextPage}</b>
-          {events.map((event, index) => {
-            const {id, title} = event;
-            
-            return (
-              <button key={`${index}-${id}`} onClick={() => getEventInformation(event)}>{title}</button>
-            );
-          })}
-          </div>
-      </div>
+        {/*      return (*/}
+        {/*          <button key={`${index}-${id}`} onClick={() => getEventInformation(event)}>{title}</button>*/}
+        {/*      );*/}
+        {/*    })}*/}
+        {/*  </Content>*/}
+        {/*</Layout>*/}
+        {/*<Footer>Footer</Footer>*/}
+        <HomepageWrapper></HomepageWrapper>
+      </Layout>
   );
 }
 
