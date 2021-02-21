@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Redirect } from 'react-router-dom';
+import HomepageWrapper from './HomepageWrapper';
 
 export default class PageWrapper extends Component {
     constructor(props) {
@@ -40,9 +41,9 @@ export default class PageWrapper extends Component {
             );
         } else {
             return (
-              <div>
-                {this.props.children}
-              </div>      
+                <HomepageWrapper>
+                    {this.props.children}
+                </HomepageWrapper> 
             );
         }
     }

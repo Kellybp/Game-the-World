@@ -2,14 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {authMethods} from '../firebase/auth';
 import firebase from 'firebase';
 import {Button, Layout} from 'antd';
-import HomepageWrapper from '../components/HomepageWrapper'
+import { Typography } from 'antd';
+import { Card } from 'antd';
 
 const {Header, Footer, Sider, Content} = Layout;
+const { Title } = Typography;
 
 const Homepage = () => {
   const [userEmail] = useState(firebase.auth().currentUser.email);
   const [userPosition, setUserPosition] = useState([]);
-  const [nextPage, setNextPage] = useState('https://api.predicthq.com/v1/events/?q=rit');
+  const [nextPage, setNextPage] = useState('https://api.predicthq.com/v1/events/?');
   const [events, setEvents] = useState([]);
 
   const getUserPosition = () => {
@@ -37,7 +39,7 @@ const Homepage = () => {
       }
     ).then((res) => {
       res.json().then((data) => {
-        // console.log(data.results[0]);
+        console.log(data.results[0]);
         const newEvents = [
           ...events,
           ...data.results,
@@ -84,30 +86,26 @@ const Homepage = () => {
   }, []);
   // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
   return (
-      <Layout>
-        {/*<Header>*/}
-        {/*  HOME PAGE*/}
-        {/*  Logged User: {userEmail}*/}
-        {/*  <br/>*/}
-        {/*  <Button variant="danger" type="button" onClick={handleLogOut}> Logout</Button>*/}
-        {/*  <Button variant="primary" type="button" onClick={getNextEventPage}> NextPage</Button>*/}
-        {/*</Header>*/}
-        {/*<Layout>*/}
-        {/*  <Sider>Sider</Sider>*/}
-        {/*  <Content>*/}
-        {/*    <b>{events.length}-{nextPage}</b>*/}
-        {/*    {events.map((event, index) => {*/}
-        {/*      const {id, title} = event;*/}
+    <div style={{display: 'flex'}}>
+      <div className="events-container" style={{display: 'flex', flexDirection: 'column', width: '30%', height: '100%', maxHeight: '600px'}}>
+        <Title level={3}>Events</Title>
+          <div style={{overflowY: 'scroll'}}>
+            {events.map((event, index) => {
+              const {id, title, category, description } = event;
 
-        {/*      return (*/}
-        {/*          <button key={`${index}-${id}`} onClick={() => getEventInformation(event)}>{title}</button>*/}
-        {/*      );*/}
-        {/*    })}*/}
-        {/*  </Content>*/}
-        {/*</Layout>*/}
-        {/*<Footer>Footer</Footer>*/}
-        <HomepageWrapper></HomepageWrapper>
-      </Layout>
+              return (
+                  <Card key={`${index}-${id}`} title={title} style={{ width: '90%', margin: '10px', cursor: 'pointer' }} onClick={() => getEventInformation(event)}>
+                    <p>{description}</p>
+                  </Card>
+              );
+            })}
+          <Button variant="primary" type="button" onClick={getNextEventPage}>Load More</Button>
+        </div>
+      </div>
+      <div className="event-info-container" style={{width: '70%'}}>
+        <Title level={3}>Event Info</Title>
+      </div>
+    </div>
   );
 }
 

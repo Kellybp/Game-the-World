@@ -17,14 +17,32 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 class HomepageWrapper extends React.Component {
-    state = {
-        collapsed: false,
-    };
+    constructor(props) {
+        super(props);
+
+
+        this.state = {
+            collapsed: false,
+            loggedUser: ''
+        }
+    }
 
     onCollapse = collapsed => {
-        console.log(collapsed);
+        // console.log(collapsed);
         this.setState({ collapsed });
     };
+
+    componentDidMount() {
+        const userEmail = firebase.auth().currentUser.email;
+
+        this.setState({
+            loggedUser: userEmail
+        });
+    }
+
+    handleLogout() {
+        authMethods.signOut();
+    }
 
     render() {
         const { collapsed } = this.state;
@@ -56,14 +74,17 @@ class HomepageWrapper extends React.Component {
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: 0 }} />
-                    <Content style={{ margin: '0 16px' }}>
+                    <Header className="site-layout-background" style={{ padding: 0 }} >
                         <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>User</Breadcrumb.Item>
-                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.state.loggedUser}</Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                <a onClick={this.handleLogout} style={{color: 'blue'}}>Logout</a>
+                            </Breadcrumb.Item>
                         </Breadcrumb>
-                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                            Bill is a cat.
+                    </Header>
+                    <Content style={{ margin: '0 16px' }}>
+                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360, height: '100%' }}>
+                            {this.props.children}
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
