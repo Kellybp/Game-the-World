@@ -4,8 +4,22 @@ import firebase from 'firebase';
 
 const Homepage = () => {
   const [userEmail] = useState(firebase.auth().currentUser.email);
-  const [nextPage, setNextPage] = useState('https://api.predicthq.com/v1/events/');
+  const [userPosition, setUserPosition] = useState([]);
+  const [nextPage, setNextPage] = useState('https://api.predicthq.com/v1/events/?q=rit');
   const [events, setEvents] = useState([]);
+
+  const getUserPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setUserPosition([
+          position.coords.latitude,
+          position.coords.longitude,
+        ]);
+      }, () => {
+        alert('You need to enable location services in order to use the app.');
+      });
+    }
+  }
 
   const getNextEventPage = () => {
     fetch(
@@ -19,7 +33,7 @@ const Homepage = () => {
       }
     ).then((res) => {
       res.json().then((data) => {
-        console.log(events[0])
+        // console.log(data.results[0]);
         const newEvents = [
           ...events,
           ...data.results,
@@ -31,9 +45,27 @@ const Homepage = () => {
         setNextPage(
           data.next
         );
-        // console.log(data)
       });
     });
+  }
+
+  // To handle when an event is clicked.
+  const getEventInformation = (event) => {
+    const { location } = event;
+    const eventLocation = location.join(',');
+    const userLocation = userPosition.join(',');
+    // console.log(eventLocation);
+  
+    fetch(`https://api.radar.io/v1/route/distance?origin=${userLocation}&destination=${eventLocation}&modes=foot,car&units=imperial`, {
+      headers: {
+        // Header goes here
+        Authorization: 'RADAR KEY GOES HERE'
+      }
+    }).then((res) => {
+      res.json().then((data) => {
+        console.log(data);
+      })
+    })
   }
 
   const handleLogOut = (event) => {
@@ -43,8 +75,9 @@ const Homepage = () => {
   }
 
   useEffect(() => {
+    getUserPosition();
     getNextEventPage();
-  }, [])
+  }, []);
 
   return(
       <div>
@@ -60,9 +93,7 @@ const Homepage = () => {
             const {id, title} = event;
             
             return (
-              <p key={`${index}-${id}`}>
-                {title}
-              </p>
+              <button key={`${index}-${id}`} onClick={() => getEventInformation(event)}>{title}</button>
             );
           })}
           </div>
