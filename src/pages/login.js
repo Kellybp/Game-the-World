@@ -5,12 +5,12 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import '../styling/registrationStyle.css'
 import { Divider, Row, Col, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { notification } from 'antd';
 
 const Login = () => {
     let history = useHistory();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -21,9 +21,14 @@ const Login = () => {
             .then(() => {
                 history.push('/homepage');
             }).catch((e) => {
-                alert(e.message);
+                notification.error({
+                    message: 'Error',
+                    description: e.message
+                  });
+                // alert(e.message);
             });
     };
+
     const tailLayout = {
         wrapperCol: { offset: 4, span: 16 },
     };

@@ -5,7 +5,7 @@ import { Row, Col } from 'antd';
 import '../styling/registrationStyle.css'
 import { Divider } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
+import { notification } from 'antd';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +18,11 @@ const Register = () => {
         .then((data) => {
             console.log(data);
         }).catch((e) => {
-            alert(e.message);
+            // alert(e.message);
+            notification.error({
+                message: 'Error',
+                description: e.message
+              });
         })
   };
 
